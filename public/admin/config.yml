@@ -1,0 +1,270 @@
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create: 'إنشاء {{collection}} "{{slug}}"'
+    update: 'تحديث {{collection}} "{{slug}}"'
+    delete: 'حذف {{collection}} "{{slug}}"'
+    uploadMedia: 'رفع "{{path}}"'
+    deleteMedia: 'حذف "{{path}}"'
+
+publish_mode: editorial_workflow
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+locale: 'ar'
+
+site_url: https://interodesing.netlify.app
+display_url: https://interodesing.netlify.app
+
+collections:
+  - name: "settings"
+    label: "⚙️ إعدادات الموقع"
+    files:
+      - name: "general"
+        label: "الإعدادات العامة"
+        file: "src/data/settings.json"
+        fields:
+          - { label: "اسم الموقع", name: "siteName", widget: "string", default: "تصميم داخلي فاخر" }
+          - { label: "شعار الموقع", name: "logo", widget: "image", required: false }
+          - { label: "وصف الموقع", name: "siteDescription", widget: "text" }
+          - { label: "عنوان الشركة", name: "address", widget: "string" }
+          - { label: "الهاتف الأساسي", name: "phone", widget: "string" }
+          - { label: "البريد الإلكتروني", name: "email", widget: "string" }
+          - { label: "ساعات العمل", name: "workingHours", widget: "string" }
+          - { label: "رابط فيسبوك", name: "facebook", widget: "string", required: false }
+          - { label: "رابط إنستغرام", name: "instagram", widget: "string", required: false }
+          - { label: "رابط تويتر", name: "twitter", widget: "string", required: false }
+          - { label: "رابط لينكد إن", name: "linkedin", widget: "string", required: false }
+          - { label: "رابط يوتيوب", name: "youtube", widget: "string", required: false }
+
+      - name: "seo"
+        label: "إعدادات SEO"
+        file: "src/data/seo.json"
+        fields:
+          - { label: "عنوان الصفحة الرئيسية", name: "homeTitle", widget: "string" }
+          - { label: "وصف الصفحة الرئيسية", name: "homeDescription", widget: "text" }
+          - { label: "الكلمات المفتاحية", name: "keywords", widget: "string" }
+          - { label: "صورة المشاركة الافتراضية", name: "ogImage", widget: "image", required: false }
+          - { label: "رمز Google Analytics", name: "googleAnalytics", widget: "string", required: false }
+          - { label: "رمز Facebook Pixel", name: "facebookPixel", widget: "string", required: false }
+
+  - name: "homepage"
+    label: "🏠 الصفحة الرئيسية"
+    files:
+      - name: "hero"
+        label: "قسم البطل الرئيسي"
+        file: "src/data/hero.json"
+        fields:
+          - { label: "العنوان الرئيسي", name: "title", widget: "string" }
+          - { label: "العنوان الفرعي", name: "subtitle", widget: "string" }
+          - { label: "الوصف", name: "description", widget: "text" }
+          - { label: "نص الزر الأساسي", name: "primaryButtonText", widget: "string" }
+          - { label: "رابط الزر الأساسي", name: "primaryButtonLink", widget: "string" }
+          - { label: "نص الزر الثانوي", name: "secondaryButtonText", widget: "string" }
+          - { label: "رابط الزر الثانوي", name: "secondaryButtonLink", widget: "string" }
+          - { label: "صورة الخلفية", name: "backgroundImage", widget: "image", required: false }
+          - { label: "فيديو الخلفية", name: "backgroundVideo", widget: "file", required: false }
+
+      - name: "about"
+        label: "قسم من نحن"
+        file: "src/data/about-section.json"
+        fields:
+          - { label: "العنوان", name: "title", widget: "string" }
+          - { label: "العنوان الفرعي", name: "subtitle", widget: "string" }
+          - { label: "الوصف", name: "description", widget: "text" }
+          - { label: "الصورة الرئيسية", name: "mainImage", widget: "image", required: false }
+          - label: "الإحصائيات"
+            name: "stats"
+            widget: "list"
+            fields:
+              - { label: "الرقم", name: "number", widget: "string" }
+              - { label: "التسمية", name: "label", widget: "string" }
+              - { label: "الأيقونة", name: "icon", widget: "string", required: false }
+
+      - name: "services"
+        label: "قسم الخدمات"
+        file: "src/data/services.json"
+        fields:
+          - { label: "العنوان", name: "title", widget: "string" }
+          - { label: "العنوان الفرعي", name: "subtitle", widget: "string" }
+          - { label: "الوصف", name: "description", widget: "text" }
+          - label: "الخدمات"
+            name: "services"
+            widget: "list"
+            fields:
+              - { label: "اسم الخدمة", name: "name", widget: "string" }
+              - { label: "الوصف", name: "description", widget: "text" }
+              - { label: "الأيقونة", name: "icon", widget: "string" }
+              - { label: "الصورة", name: "image", widget: "image", required: false }
+              - { label: "السعر", name: "price", widget: "string", required: false }
+
+  - name: "projects"
+    label: "🏗️ المشاريع"
+    folder: "src/data/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "عنوان المشروع", name: "title", widget: "string" }
+      - { label: "الفئة", name: "category", widget: "select", options: ["غرف المعيشة", "المطابخ", "غرف النوم", "المكاتب", "الحمامات", "الفلل", "الشقق", "المحلات التجارية", "المكاتب التجارية"] }
+      - { label: "العميل", name: "client", widget: "string" }
+      - { label: "الموقع", name: "location", widget: "string" }
+      - { label: "تاريخ الإنجاز", name: "date", widget: "string" }
+      - { label: "مدة التنفيذ", name: "duration", widget: "string" }
+      - { label: "المساحة", name: "area", widget: "string" }
+      - { label: "الميزانية", name: "budget", widget: "string", required: false }
+      - { label: "الصورة الرئيسية", name: "mainImage", widget: "image" }
+      - label: "معرض الصور"
+        name: "gallery"
+        widget: "list"
+        field: { label: "الصورة", name: "image", widget: "image" }
+      - { label: "وصف المشروع", name: "description", widget: "text" }
+      - { label: "التحدي", name: "challenge", widget: "text" }
+      - { label: "الحل", name: "solution", widget: "text" }
+      - { label: "النتيجة", name: "result", widget: "text", required: false }
+      - label: "المواد المستخدمة"
+        name: "materials"
+        widget: "list"
+        field: { label: "المادة", name: "material", widget: "string" }
+      - label: "الميزات الخاصة"
+        name: "features"
+        widget: "list"
+        field: { label: "الميزة", name: "feature", widget: "string" }
+      - { label: "مشروع مميز", name: "featured", widget: "boolean", default: false }
+      - { label: "منشور", name: "published", widget: "boolean", default: true }
+
+  - name: "team"
+    label: "👥 فريق العمل"
+    folder: "src/data/team"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "الاسم", name: "name", widget: "string" }
+      - { label: "المنصب", name: "position", widget: "string" }
+      - { label: "الصورة الشخصية", name: "image", widget: "image" }
+      - { label: "السيرة الذاتية", name: "bio", widget: "text" }
+      - { label: "سنوات الخبرة", name: "experience", widget: "string" }
+      - { label: "التخصص", name: "specialization", widget: "string" }
+      - { label: "البريد الإلكتروني", name: "email", widget: "string", required: false }
+      - { label: "الهاتف", name: "phone", widget: "string", required: false }
+      - { label: "لينكد إن", name: "linkedin", widget: "string", required: false }
+      - { label: "إنستغرام", name: "instagram", widget: "string", required: false }
+      - label: "المهارات"
+        name: "skills"
+        widget: "list"
+        field: { label: "المهارة", name: "skill", widget: "string" }
+      - { label: "ترتيب العرض", name: "order", widget: "number", default: 1 }
+      - { label: "نشط", name: "active", widget: "boolean", default: true }
+
+  - name: "testimonials"
+    label: "💬 آراء العملاء"
+    folder: "src/data/testimonials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "اسم العميل", name: "clientName", widget: "string" }
+      - { label: "المنصب", name: "position", widget: "string", required: false }
+      - { label: "الشركة", name: "company", widget: "string", required: false }
+      - { label: "صورة العميل", name: "image", widget: "image", required: false }
+      - { label: "التقييم", name: "rating", widget: "number", min: 1, max: 5, default: 5 }
+      - { label: "الرأي", name: "testimonial", widget: "text" }
+      - { label: "المشروع المرتبط", name: "project", widget: "string", required: false }
+      - { label: "التاريخ", name: "date", widget: "string" }
+      - { label: "مميز", name: "featured", widget: "boolean", default: false }
+      - { label: "منشور", name: "published", widget: "boolean", default: true }
+
+  - name: "pages"
+    label: "📄 الصفحات"
+    files:
+      - name: "about"
+        label: "صفحة من نحن"
+        file: "src/data/about-page.json"
+        fields:
+          - { label: "عنوان الصفحة", name: "title", widget: "string" }
+          - { label: "العنوان الفرعي", name: "subtitle", widget: "string" }
+          - { label: "الصورة الرئيسية", name: "heroImage", widget: "image", required: false }
+          - { label: "المقدمة", name: "introduction", widget: "text" }
+          - { label: "قصتنا", name: "ourStory", widget: "text" }
+          - { label: "رؤيتنا", name: "vision", widget: "text" }
+          - { label: "رسالتنا", name: "mission", widget: "text" }
+          - { label: "قيمنا", name: "values", widget: "text" }
+          - label: "الإنجازات"
+            name: "achievements"
+            widget: "list"
+            fields:
+              - { label: "العنوان", name: "title", widget: "string" }
+              - { label: "الوصف", name: "description", widget: "text" }
+              - { label: "التاريخ", name: "date", widget: "string" }
+              - { label: "الصورة", name: "image", widget: "image", required: false }
+
+      - name: "contact"
+        label: "صفحة التواصل"
+        file: "src/data/contact.json"
+        fields:
+          - { label: "عنوان الصفحة", name: "title", widget: "string" }
+          - { label: "العنوان الفرعي", name: "subtitle", widget: "string" }
+          - { label: "الوصف", name: "description", widget: "text" }
+          - { label: "العنوان الرئيسي", name: "mainAddress", widget: "string" }
+          - { label: "العنوان التفصيلي", name: "detailedAddress", widget: "text" }
+          - { label: "الهاتف الرئيسي", name: "mainPhone", widget: "string" }
+          - { label: "هاتف إضافي", name: "secondaryPhone", widget: "string", required: false }
+          - { label: "البريد الإلكتروني الرئيسي", name: "mainEmail", widget: "string" }
+          - { label: "بريد إلكتروني إضافي", name: "secondaryEmail", widget: "string", required: false }
+          - { label: "ساعات العمل", name: "workingHours", widget: "text" }
+          - { label: "رابط الخريطة", name: "mapUrl", widget: "string", required: false }
+          - label: "فروع إضافية"
+            name: "branches"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "اسم الفرع", name: "name", widget: "string" }
+              - { label: "العنوان", name: "address", widget: "string" }
+              - { label: "الهاتف", name: "phone", widget: "string" }
+              - { label: "البريد الإلكتروني", name: "email", widget: "string", required: false }
+
+  - name: "blog"
+    label: "📝 المدونة"
+    folder: "src/data/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "عنوان المقال", name: "title", widget: "string" }
+      - { label: "الملخص", name: "excerpt", widget: "text" }
+      - { label: "الصورة المميزة", name: "featuredImage", widget: "image" }
+      - { label: "الكاتب", name: "author", widget: "string" }
+      - { label: "تاريخ النشر", name: "date", widget: "datetime" }
+      - { label: "الفئة", name: "category", widget: "select", options: ["نصائح التصميم", "اتجاهات الديكور", "دراسات حالة", "أخبار الشركة", "إرشادات"] }
+      - label: "الكلمات المفتاحية"
+        name: "tags"
+        widget: "list"
+        field: { label: "الكلمة المفتاحية", name: "tag", widget: "string" }
+      - { label: "المحتوى", name: "body", widget: "markdown" }
+      - { label: "وقت القراءة (بالدقائق)", name: "readTime", widget: "number", default: 5 }
+      - { label: "مقال مميز", name: "featured", widget: "boolean", default: false }
+      - { label: "منشور", name: "published", widget: "boolean", default: true }
+
+  - name: "gallery"
+    label: "🖼️ معرض الصور"
+    folder: "src/data/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "عنوان الألبوم", name: "title", widget: "string" }
+      - { label: "الوصف", name: "description", widget: "text", required: false }
+      - { label: "الفئة", name: "category", widget: "select", options: ["قبل وبعد", "تفاصيل التصميم", "مراحل التنفيذ", "الأعمال المكتملة", "وراء الكواليس"] }
+      - { label: "الصورة المميزة", name: "coverImage", widget: "image" }
+      - label: "الصور"
+        name: "images"
+        widget: "list"
+        fields:
+          - { label: "الصورة", name: "image", widget: "image" }
+          - { label: "العنوان", name: "title", widget: "string", required: false }
+          - { label: "الوصف", name: "description", widget: "text", required: false }
+      - { label: "التاريخ", name: "date", widget: "string" }
+      - { label: "منشور", name: "published", widget: "boolean", default: true }
+
+editor:
+  preview: false
+show_preview_links: true
+

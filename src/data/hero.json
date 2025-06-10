@@ -1,0 +1,15 @@
+{
+  "title": " لوكشري",
+  "subtitle": "تصميم داخلي",
+  "description": "نحول مساحاتكم إلى تحفة فنية معاصرة تعكس شخصيتكم وتلبي احتياجاتكم",
+  "backgroundImages": [
+    "https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop",
+    "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop",
+    "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop",
+    "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
+  ],
+  "primaryButtonText": "استكشف أعمالنا",
+  "primaryButtonLink": "/works",
+  "secondaryButtonText": "تواصل معنا",
+  "secondaryButtonLink": "/contact"
+}
