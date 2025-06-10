@@ -4,8 +4,9 @@
     "description": "المطبخ العصري الجديد",
     "category": "قبل وبعد",
     "coverImage": "/images/uploads/villa-before-after-cover.jpg",
-    "images": "",
-    "- image": "/images/uploads/villa-after-3.jpg",
+    "images": [
+      "image: \"/images/uploads/villa-before-1.jpg"
+    ],
     "date": "2024-01-10",
     "published": true,
     "body": "",
