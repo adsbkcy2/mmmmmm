@@ -19,4 +19,15 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // إضافة إعدادات للتعامل مع ملفات admin
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+      }
+    }
+  },
+  // إعدادات للتعامل مع مجلد admin
+  publicDir: 'public'
 }));
+

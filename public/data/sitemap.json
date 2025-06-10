@@ -1,0 +1,40 @@
+{
+  "pages": [
+    {
+      "url": "/",
+      "priority": 1,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "/about",
+      "priority": 0.8,
+      "changefreq": "monthly"
+    },
+    {
+      "url": "/works",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "/contact",
+      "priority": 0.7,
+      "changefreq": "monthly"
+    },
+    {
+      "url": "/work/سيب",
+      "priority": 0.6,
+      "changefreq": "monthly"
+    },
+    {
+      "url": "/work/غرفة-معيشة-عصرية-فاخرة",
+      "priority": 0.6,
+      "changefreq": "monthly"
+    },
+    {
+      "url": "/blog/2024-01-15-نصائح-اختيار-الألوان",
+      "priority": 0.5,
+      "changefreq": "monthly"
+    }
+  ],
+  "lastGenerated": "2025-06-10T12:25:03.546Z"
+}

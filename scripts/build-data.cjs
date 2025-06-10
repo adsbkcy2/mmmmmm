@@ -24,33 +24,39 @@ function processMarkdownFiles(dirPath, outputPath) {
       
       // تحويل front matter إلى object
       const data = {};
-      frontMatter.split('\n').forEach(line => {
-        const colonIndex = line.indexOf(':');
-        if (colonIndex > -1) {
-          const key = line.substring(0, colonIndex).trim();
-          let value = line.substring(colonIndex + 1).trim();
-          
-          // إزالة علامات الاقتباس
-          if (value.startsWith('"') && value.endsWith('"')) {
-            value = value.slice(1, -1);
+      const lines = frontMatter.split('\n');
+      let currentKey = '';
+      let inArray = false;
+      
+      for (const line of lines) {
+        const trimmedLine = line.trim();
+        if (!trimmedLine) continue;
+        
+        if (trimmedLine.endsWith(':')) {
+          currentKey = trimmedLine.slice(0, -1);
+          if (currentKey === 'gallery' || currentKey === 'materials' || currentKey === 'features' || currentKey === 'tags' || currentKey === 'images') {
+            data[currentKey] = [];
+            inArray = true;
+          } else {
+            inArray = false;
           }
-          
-          // معالجة القوائم
-          if (value.startsWith('[') && value.endsWith(']')) {
-            try {
-              value = JSON.parse(value);
-            } catch (e) {
-              // إذا فشل التحويل، اتركه كما هو
-            }
+        } else if (trimmedLine.startsWith('- ')) {
+          if (inArray && currentKey) {
+            const value = trimmedLine.slice(2).replace(/^["']|["']$/g, '');
+            data[currentKey].push(value);
           }
+        } else if (trimmedLine.includes(': ')) {
+          const [key, ...valueParts] = trimmedLine.split(': ');
+          let value = valueParts.join(': ').replace(/^["']|["']$/g, '');
           
-          // معالجة القيم المنطقية
           if (value === 'true') value = true;
           if (value === 'false') value = false;
           
           data[key] = value;
+          currentKey = key;
+          inArray = false;
         }
-      });
+      }
       
       // إضافة المحتوى
       data.body = body.trim();
@@ -69,63 +75,26 @@ function processMarkdownFiles(dirPath, outputPath) {
   }
 }
 
-// دالة لمعالجة ملفات YAML المعقدة
-function parseComplexYaml(yamlString) {
-  const lines = yamlString.split('\n');
-  const result = {};
-  let currentKey = null;
-  let currentArray = null;
-  let indentLevel = 0;
-  
-  for (let line of lines) {
-    const trimmedLine = line.trim();
-    if (!trimmedLine || trimmedLine.startsWith('#')) continue;
-    
-    const currentIndent = line.length - line.trimLeft().length;
-    
-    if (trimmedLine.includes(':')) {
-      const [key, ...valueParts] = trimmedLine.split(':');
-      const value = valueParts.join(':').trim();
-      
-      if (value === '') {
-        // هذا مفتاح لكائن أو مصفوفة
-        currentKey = key.trim();
-        if (currentIndent === 0) {
-          result[currentKey] = {};
-        }
-      } else if (value.startsWith('[') && value.endsWith(']')) {
-        // مصفوفة بسيطة
-        try {
-          result[key.trim()] = JSON.parse(value);
-        } catch (e) {
-          result[key.trim()] = value;
-        }
-      } else {
-        // قيمة بسيطة
-        let processedValue = value;
-        if (value.startsWith('"') && value.endsWith('"')) {
-          processedValue = value.slice(1, -1);
-        }
-        if (value === 'true') processedValue = true;
-        if (value === 'false') processedValue = false;
-        
-        result[key.trim()] = processedValue;
-      }
-    } else if (trimmedLine.startsWith('-')) {
-      // عنصر في مصفوفة
-      const value = trimmedLine.substring(1).trim();
-      if (!result[currentKey]) {
-        result[currentKey] = [];
-      }
-      result[currentKey].push(value);
-    }
+// دالة لنسخ ملفات JSON إلى مجلد public
+function copyJSONToPublic(sourceDir, publicDir) {
+  if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir, { recursive: true });
   }
+
+  const jsonFiles = fs.readdirSync(sourceDir).filter(file => file.endsWith('.json'));
   
-  return result;
+  jsonFiles.forEach(file => {
+    const sourcePath = path.join(sourceDir, file);
+    const destPath = path.join(publicDir, file);
+    fs.copyFileSync(sourcePath, destPath);
+    console.log(`تم نسخ ${file} إلى ${publicDir}`);
+  });
 }
 
 // التأكد من وجود مجلد البيانات
 const dataDir = path.join(__dirname, '../src/data');
+const publicDataDir = path.join(__dirname, '../public/data');
+
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
@@ -152,6 +121,9 @@ markdownDirs.forEach(({ source, output }) => {
   processMarkdownFiles(source, output);
 });
 
+// نسخ ملفات JSON إلى مجلد public
+copyJSONToPublic(dataDir, publicDataDir);
+
 // إنشاء ملف فهرس شامل
 const indexData = {
   lastUpdated: new Date().toISOString(),
@@ -177,6 +149,12 @@ markdownDirs.forEach(({ output }) => {
 // حفظ ملف الفهرس
 fs.writeFileSync(
   path.join(dataDir, 'index.json'),
+  JSON.stringify(indexData, null, 2),
+  'utf8'
+);
+
+fs.writeFileSync(
+  path.join(publicDataDir, 'index.json'),
   JSON.stringify(indexData, null, 2),
   'utf8'
 );
@@ -239,6 +217,12 @@ if (fs.existsSync(path.join(dataDir, 'blog.json'))) {
 
 fs.writeFileSync(
   path.join(dataDir, 'sitemap.json'),
+  JSON.stringify(sitemapData, null, 2),
+  'utf8'
+);
+
+fs.writeFileSync(
+  path.join(publicDataDir, 'sitemap.json'),
   JSON.stringify(sitemapData, null, 2),
   'utf8'
 );

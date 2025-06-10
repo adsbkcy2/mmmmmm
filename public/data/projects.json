@@ -1,0 +1,54 @@
+[
+  {
+    "title": "سيب",
+    "category": "غرف المعيشة",
+    "client": "سيبسيب",
+    "location": "سيبسيب",
+    "date": "سيب",
+    "duration": "سيبسي",
+    "area": "سيبسيب",
+    "mainImage": "/images/uploads/33.png",
+    "gallery": [
+      "/images/uploads/33.png"
+    ],
+    "description": "سيبسي",
+    "challenge": "سيبسي",
+    "solution": "سيبسيب",
+    "materials": [
+      "سيبسيب"
+    ],
+    "features": [
+      "سيبسيب"
+    ],
+    "featured": true,
+    "published": true,
+    "body": "",
+    "slug": "سيب"
+  },
+  {
+    "title": "غرفة معيشة عصرية فاخرة",
+    "category": "غرف المعيشة",
+    "client": "احمد",
+    "location": "تجربة",
+    "date": "222",
+    "duration": "2",
+    "area": "22",
+    "mainImage": "/images/uploads/33.png",
+    "gallery": [
+      "/images/uploads/33.png"
+    ],
+    "description": "22",
+    "challenge": "22",
+    "solution": "22",
+    "materials": [
+      "2"
+    ],
+    "features": [
+      "2"
+    ],
+    "featured": true,
+    "published": true,
+    "body": "",
+    "slug": "غرفة-معيشة-عصرية-فاخرة"
+  }
+]
